@@ -13,7 +13,6 @@ const Chats = () => {
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.user?._id), (doc) => {
-        console.log(Object.entries(doc.data()));
         setChats(doc.data());
       });
 
@@ -38,8 +37,10 @@ const Chats = () => {
           onClick={() => handleSelect(chat[1]?.userInfo)}
         >
           <div className="userChatInfo">
-            <span>{chat[1].userInfo.firstname}</span>
+            <span>{chat[1].userInfo?.firstname}</span>
             <p>{chat[1].lastMessage?.text}</p>
+          </div>
+          <div style={{ backgroundColor: chat[1].status === "online" ? "rgb(99, 235, 99)" : "rgb(205, 177, 177)" }} className="status">
           </div>
         </div>
       ))}

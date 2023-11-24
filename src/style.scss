@@ -16,6 +16,13 @@
   }
 }
 
+.status {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin-left: 20px;
+}
+
 .formContainer {
   background-color: #a7bcff;
   height: 100vh;
@@ -240,6 +247,19 @@
         height: calc(100% - 160px);
         overflow: scroll;
 
+        .initial {
+          width: 40px;
+          height: 40px;
+          border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-shrink: 0;
+          color: white;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+
         .message {
           display: flex;
           gap: 20px;
@@ -247,8 +267,9 @@
 
           .messageInfo {
             display: flex;
-            flex-direction: column;
+            // flex-direction: column;
             color: gray;
+            gap: 10px;
             font-weight: 300;
 
             img {
@@ -264,10 +285,12 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            margin-top: 6px;
 
             p {
-              background-color: white;
+              background-color: rgb(39, 171, 39);
               padding: 10px 20px;
+              color: white;
               border-radius: 0px 10px 10px 10px;
               max-width: max-content;
             }
@@ -278,13 +301,13 @@
           }
 
           &.owner {
-            flex-direction: row-reverse;
+            // flex-direction: row-reverse;
 
             .messageContent {
-              align-items: flex-end;
+              // align-items: flex-end;
 
               p {
-                background-color: #8da4f1;
+                background-color: #2347be;
                 color: white;
                 border-radius: 10px 0px 10px 10px;
               }

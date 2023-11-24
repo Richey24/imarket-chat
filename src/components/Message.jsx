@@ -12,18 +12,28 @@ const Message = ({ message }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  const showLargeImage = (img) => {
+    document.getElementById("theImage").src = img
+    document.getElementById("imageOverlay").classList.add("showImg")
+  }
+
   return (
     <div
       ref={ref}
       className={`message ${message.senderId === currentUser.user._id && "owner"}`}
     >
-      <div className="messageInfo">
-        <div>{message.senderId === currentUser.user._id ? currentUser.user.firstname : data.user.firstname}</div>
-        <span style={{ width: "100px" }}>{new Date(message.date?.seconds * 1000 + message.date?.nanoseconds / 1000000).toLocaleString()}</span>
+      <div style={{ backgroundColor: message.senderId === currentUser.user._id ? "#0d2984" : "green" }} className="initial">
+        {message.senderId === currentUser.user._id ? currentUser.user?.firstname.charAt(0) : data.user?.firstname.charAt(0)}
       </div>
-      <div className="messageContent">
-        {message.text && <p>{message.text}</p>}
-        {message.img && <img src={message.img} alt="" />}
+      <div>
+        <div className="messageInfo">
+          <div>{message.senderId === currentUser.user._id ? currentUser.user.firstname : data.user.firstname}</div>
+          <span>{new Date(message.date?.seconds * 1000 + message.date?.nanoseconds / 1000000).toLocaleString()}</span>
+        </div>
+        <div className="messageContent">
+          {message.text && <p>{message.text}</p>}
+          {message.img && <img onClick={() => showLargeImage(message.img)} src={message.img} alt="" />}
+        </div>
       </div>
     </div>
   );

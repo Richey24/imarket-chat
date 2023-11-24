@@ -1,0 +1,34 @@
+.imageOverlay {
+    position: absolute;
+    width: 55%;
+    height: 75vh;
+    left: 25%;
+    top: 8%;
+    display: none;
+}
+
+.imageOverlay>img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.imageOverlay>button {
+    width: 80px;
+    height: 30px;
+    background-color: tomato;
+    color: white;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.showImg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
