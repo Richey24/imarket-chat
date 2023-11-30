@@ -1,85 +1,99 @@
-import React, { useState } from "react";
-import Add from "../img/addAvatar.png";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db, storage } from "../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase";
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
   const [err, setErr] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [params, setParams] = useSearchParams()
 
-  const handleSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    const displayName = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
-    const file = e.target[3].files[0];
 
-    try {
-      //Create user
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-
-      //Create a unique image name
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${displayName + date}`);
-
-      await uploadBytesResumable(storageRef, file).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            //Update profile
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-            //create user on firestore
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
-
-            //create empty user chats on firestore
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-            navigate("/");
-          } catch (err) {
-            console.log(err);
-            setErr(true);
-            setLoading(false);
+  useEffect(() => {
+    if (params.get("vendorToken") && params.get("customerToken")) {
+      (async () => {
+        try {
+          const result = await axios.get("https://market-server.azurewebsites.net/api/auth/me", {
+            headers: {
+              Authorization: `Bearer ${params.get("vendorToken")}`
+            }
+          })
+          const vendorObj = {
+            user: {
+              email: result.data.user.email,
+              firstname: result.data.user.firstname,
+              _id: result.data.user._id,
+            }
           }
-        });
-      });
-    } catch (err) {
-      setErr(true);
-      setLoading(false);
+          const cusResult = await axios.get("https://market-server.azurewebsites.net/api/auth/me", {
+            headers: {
+              Authorization: `Bearer ${params.get("customerToken")}`
+            }
+          })
+          const customerObj = {
+            user: {
+              email: cusResult.data.user.email,
+              firstname: cusResult.data.user.firstname,
+              _id: cusResult.data.user._id,
+            }
+          }
+          const combinedId =
+            vendorObj.user._id > customerObj.user._id
+              ? vendorObj.user._id + customerObj.user._id
+              : customerObj.user._id + vendorObj.user._id;
+
+          const res = await getDoc(doc(db, "chats", combinedId));
+          if (!res.exists()) {
+            //create a chat in chats collection
+            await setDoc(doc(db, "chats", combinedId), { messages: [] });
+            const vendorRes = await getDoc(doc(db, "userChats", vendorObj.user?._id));
+            const customerRes = await getDoc(doc(db, "userChats", customerObj.user?._id));
+
+            if (!vendorRes.exists()) {
+              await setDoc(doc(db, "userChats", vendorObj.user?._id), {})
+            }
+            if (!customerRes.exists()) {
+              await setDoc(doc(db, "userChats", customerObj.user?._id), {})
+            }
+            //create user chats
+            await updateDoc(doc(db, "userChats", vendorObj.user._id), {
+              [combinedId + ".userInfo"]: {
+                uid: customerObj.user._id,
+                firstname: customerObj.user.firstname,
+              },
+              [combinedId + ".date"]: serverTimestamp(),
+            });
+            await updateDoc(doc(db, "userChats", customerObj.user._id), {
+              [combinedId + ".userInfo"]: {
+                uid: vendorObj.user._id,
+                firstname: vendorObj.user.firstname,
+              },
+              [combinedId + ".date"]: serverTimestamp(),
+            });
+          }
+        } catch (err) {
+          setErr(true)
+        }
+      })()
+    } else {
+      navigate("/login")
     }
-  };
+  }, [])
 
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
-        <span className="title">Register</span>
-        <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="display name" />
-          <input required type="email" placeholder="email" />
-          <input required type="password" placeholder="password" />
-          <input required style={{ display: "none" }} type="file" id="file" />
-          <label htmlFor="file">
-            <img src={Add} alt="" />
-            <span>Add an avatar</span>
-          </label>
-          <button disabled={loading}>Sign up</button>
-          {loading && "Uploading and compressing the image please wait..."}
-          {err && <span>Something went wrong</span>}
-        </form>
-        <p>
-          You do have an account? <Link to="/register">Login</Link>
-        </p>
+        <span className="logo">Ishop Chat</span>
+        {
+          !err ? (
+            <h1 style={{ color: "#5d5b8d", fontSize: "24px" }}>Creating Account...</h1>
+          ) : (
+            <h1 style={{ color: "red", fontSize: "18px" }}>Something went wrong</h1>
+          )
+        }
+        {!err && <span className="title">You will be redirected when it is done</span>}
       </div>
     </div>
   );
