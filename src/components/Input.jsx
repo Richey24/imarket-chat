@@ -46,7 +46,7 @@ const Input = () => {
               messages: arrayUnion({
                 id: uuid(),
                 text,
-                senderId: currentUser.user._id,
+                senderId: currentUser.uid,
                 date: Timestamp.now(),
                 img: downloadURL,
               }),
@@ -59,13 +59,13 @@ const Input = () => {
         messages: arrayUnion({
           id: uuid(),
           text,
-          senderId: currentUser.user._id,
+          senderId: currentUser.uid,
           date: Timestamp.now(),
         }),
       });
     }
 
-    await updateDoc(doc(db, "userChats", currentUser.user._id), {
+    await updateDoc(doc(db, "userChats", currentUser.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
       },
