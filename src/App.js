@@ -1,6 +1,6 @@
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-// import Register from "./pages/Register";
+import Register from "./pages/Register";
 import "./style.scss";
 import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
 import { useContext } from "react";
@@ -35,19 +35,21 @@ function App() {
   }, [])
 
   document.addEventListener("visibilitychange", async () => {
-    const res = await getDoc(doc(db, "userChats", currentUser.uid));
-    if (document.visibilityState === "hidden") {
-      Object.entries(res.data()).forEach(async (re) => {
-        await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
-          [re[0] + ".status"]: "offline",
-        });
-      })
-    } else {
-      Object.entries(res.data()).forEach(async (re) => {
-        await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
-          [re[0] + ".status"]: "online",
-        });
-      })
+    if (currentUser) {
+      const res = await getDoc(doc(db, "userChats", currentUser.uid));
+      if (document.visibilityState === "hidden") {
+        Object.entries(res.data()).forEach(async (re) => {
+          await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
+            [re[0] + ".status"]: "offline",
+          });
+        })
+      } else {
+        Object.entries(res.data()).forEach(async (re) => {
+          await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
+            [re[0] + ".status"]: "online",
+          });
+        })
+      }
     }
   })
 
@@ -64,7 +66,7 @@ function App() {
             }
           />
           <Route path="login" element={<Login />} />
-          {/* <Route path="register" element={<Register />} /> */}
+          <Route path="register" element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className='navbar'>
       <span className="logo">Ishop Chat</span>
       <div className="user">
-        <span>{currentUser?.email}</span>
+        <span>{currentUser?.displayName}</span>
         <button onClick={() => signOut(auth)}>logout</button>
       </div>
     </div>
