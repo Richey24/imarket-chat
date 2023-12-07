@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Login = () => {
   const [err, setErr] = useState(false);
   const [params, setParams] = useSearchParams()
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (params.get("token")) {
       (async () => {
@@ -32,12 +36,8 @@ const Login = () => {
     const password = e.target[1].value;
 
     try {
-      const result = await axios.post("https://market-server.azurewebsites.net/api/auth/login", {
-        email: email,
-        password: password
-      });
-      localStorage.setItem("user", JSON.stringify(result.data))
-      window.location.replace("/")
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/")
     } catch (err) {
       setErr(true);
     }
@@ -53,7 +53,7 @@ const Login = () => {
           <button>Sign in</button>
           {err && <span>Something went wrong</span>}
         </form>
-        {/* <p>You don't have an account? <Link to="/register">Register</Link></p> */}
+        <p>You don't have an account? <Link to="/register">Register</Link></p>
       </div>
     </div>
   );

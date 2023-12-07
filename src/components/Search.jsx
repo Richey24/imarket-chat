@@ -19,6 +19,7 @@ const Search = () => {
   const [err, setErr] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
 
   useEffect(() => {
     (async () => {

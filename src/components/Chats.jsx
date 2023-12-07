@@ -12,8 +12,8 @@ const Chats = () => {
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.user?._id), (doc) => {
-        setChats(doc.data());
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        doc.data() && setChats(doc.data());
       });
 
       return () => {
@@ -21,8 +21,8 @@ const Chats = () => {
       };
     };
 
-    currentUser.user?._id && getChats();
-  }, [currentUser.user?._id]);
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
 
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });

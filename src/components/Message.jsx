@@ -5,6 +5,7 @@ import { ChatContext } from "../context/ChatContext";
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+  console.log(data);
 
   const ref = useRef();
 
@@ -20,14 +21,14 @@ const Message = ({ message }) => {
   return (
     <div
       ref={ref}
-      className={`message ${message.senderId === currentUser.user._id && "owner"}`}
+      className={`message ${message.senderId === currentUser.uid && "owner"}`}
     >
-      <div style={{ backgroundColor: message.senderId === currentUser.user._id ? "#0d2984" : "green" }} className="initial">
-        {message.senderId === currentUser.user._id ? currentUser.user?.firstname.charAt(0) : data.user?.firstname.charAt(0)}
+      <div style={{ backgroundColor: message.senderId === currentUser.uid ? "#0d2984" : "green" }} className="initial">
+        {message.senderId === currentUser.uid ? currentUser.email?.charAt(0) : data?.user.firstname.charAt(0)}
       </div>
       <div>
         <div className="messageInfo">
-          <div>{message.senderId === currentUser.user._id ? currentUser.user.firstname : data.user.firstname}</div>
+          <div>{message.senderId === currentUser.uid ? currentUser.email : data?.user.firstname}</div>
           <span>{new Date(message.date?.seconds * 1000 + message.date?.nanoseconds / 1000000).toLocaleString()}</span>
         </div>
         <div className="messageContent">

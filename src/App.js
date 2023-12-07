@@ -20,10 +20,10 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const res = await getDoc(doc(db, "userChats", currentUser.user?._id));
+      const res = await getDoc(doc(db, "userChats", currentUser.uid));
 
       if (!res.exists()) {
-        await setDoc(doc(db, "userChats", currentUser.user?._id), {})
+        await setDoc(doc(db, "userChats", currentUser.uid), {})
       } else {
         Object.entries(res.data()).forEach(async (re) => {
           await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
@@ -35,19 +35,21 @@ function App() {
   }, [])
 
   document.addEventListener("visibilitychange", async () => {
-    const res = await getDoc(doc(db, "userChats", currentUser.user?._id));
-    if (document.visibilityState === "hidden") {
-      Object.entries(res.data()).forEach(async (re) => {
-        await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
-          [re[0] + ".status"]: "offline",
-        });
-      })
-    } else {
-      Object.entries(res.data()).forEach(async (re) => {
-        await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
-          [re[0] + ".status"]: "online",
-        });
-      })
+    if (currentUser) {
+      const res = await getDoc(doc(db, "userChats", currentUser.uid));
+      if (document.visibilityState === "hidden") {
+        Object.entries(res.data()).forEach(async (re) => {
+          await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
+            [re[0] + ".status"]: "offline",
+          });
+        })
+      } else {
+        Object.entries(res.data()).forEach(async (re) => {
+          await updateDoc(doc(db, "userChats", re[1].userInfo.uid), {
+            [re[0] + ".status"]: "online",
+          });
+        })
+      }
     }
   })
 
