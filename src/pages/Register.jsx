@@ -3,6 +3,7 @@ import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import logo from "../img/logo.png"
 
 const Register = () => {
   const [err, setErr] = useState(false);
@@ -34,6 +35,7 @@ const Register = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
+        <img style={{ width: "120px", height: "40px" }} src={logo} alt="" />
         <span className="logo">Ishop Chat</span>
         <span className="title">Register</span>
         <form onSubmit={handleSubmit}>

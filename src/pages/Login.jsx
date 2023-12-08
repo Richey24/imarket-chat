@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import logo from "../img/logo.png"
 
 const Login = () => {
   const [err, setErr] = useState(false);
@@ -45,6 +46,7 @@ const Login = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
+        <img style={{ width: "120px", height: "40px" }} src={logo} alt="" />
         <span className="logo">Ishop Chat</span>
         <span className="title">Login</span>
         <form onSubmit={handleSubmit}>
