@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import logo from "../img/logo.png"
+import logo from "../img/logo-black.png"
 
 const Login = () => {
   const [err, setErr] = useState(false);

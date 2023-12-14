@@ -3,7 +3,7 @@ import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import logo from "../img/logo.png"
+import logo from "../img/logo-black.png"
 
 const Register = () => {
   const [err, setErr] = useState(false);
