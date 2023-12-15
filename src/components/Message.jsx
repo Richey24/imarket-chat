@@ -19,24 +19,22 @@ const Message = ({ message }) => {
   }
 
   return (
-    <div
-      ref={ref}
-      className={`message ${message.senderId === currentUser.uid && "owner"}`}
-    >
-      <div style={{ backgroundColor: message.senderId === currentUser.uid ? "#0d2984" : "green" }} className="initial">
-        {message.senderId === currentUser.uid ? currentUser.email?.charAt(0) : data?.user.firstname.charAt(0)}
-      </div>
-      <div>
-        <div className="messageInfo">
-          <div>{message.senderId === currentUser.uid ? currentUser.email : data?.user.firstname}</div>
-          <span>{new Date(message.date?.seconds * 1000 + message.date?.nanoseconds / 1000000).toLocaleString()}</span>
-        </div>
-        <div className="messageContent">
-          {message.text && <p>{message.text}</p>}
-          {message.img && <img onClick={() => showLargeImage(message.img)} src={message.img} alt="" />}
-        </div>
-      </div>
-    </div>
+    <>
+      {message.senderId === currentUser.uid ? (
+            // Render this if the sender ID matches the current user's ID
+            <div className="bubble me">
+                  {message.text && <>{message.text}</>}
+                  {message.img && <img onClick={() => showLargeImage(message.img)} src={message.img} alt="" />}
+            </div>
+        ) : (
+            // Render this otherwise
+            <div className="bubble you">
+                 {message.text && <>{message.text}</>}
+                 {message.img && <img onClick={() => showLargeImage(message.img)} src={message.img} alt="" />}
+            </div>
+        )}
+    
+    </>
   );
 };
 

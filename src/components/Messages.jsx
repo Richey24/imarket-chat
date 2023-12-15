@@ -21,10 +21,15 @@ const Messages = () => {
 
 
   return (
-    <div className="messages">
-      {messages.map((m) => (
-        <Message message={m} key={m.id} />
-      ))}
+    <div className="chat active-chat">
+         
+          <div className="conversation-start">
+              <span>Today, 6:48 AM</span>
+          </div>
+        
+        {messages.map((m) => (
+          <Message message={m} key={m.id} />
+        ))}
     </div>
   );
 };

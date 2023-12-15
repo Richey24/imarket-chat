@@ -5,12 +5,16 @@ import Chats from "./Chats"
 
 const Sidebar = () => {
   return (
-    <div className="sidebar">
-      <Navbar />
-      {/* <Search/> */}
-      <Chats />
+    <div className="user-list-box">
+          
+          <Search/>
+          <div className="people">
+              <Chats />
+          </div>
+        {/* <Navbar /> */}
+        
     </div>
-  );
-};
+  )
+  }
 
 export default Sidebar;
