@@ -90,28 +90,47 @@ const Input = () => {
     }
   }
 
+  const chatFooterDisplayStyle = currentUser ? { display: 'block' } : { display: 'none' };
+
   return (
-    <div className="input">
-      <input
-        type="text"
-        placeholder="Type something..."
-        onChange={(e) => setText(e.target.value)}
-        onKeyDown={sendWithEnter}
-        value={text}
-      />
-      <div className="send">
-        <input
-          type="file"
-          style={{ display: "none" }}
-          id="file"
-          onChange={(e) => setImg(e.target.files[0])}
-        />
-        <label htmlFor="file">
-          <img src={Img} alt="" />
-        </label>
-        <button disabled={text ? false : img ? false : true} style={{ backgroundColor: text ? "blue" : img ? "blue" : "", borderRadius: "12px" }} onClick={handleSend}>Send</button>
-      </div>
-    </div>
+    <>
+      <div className="chat-footer chat-active" >
+          <div className="chat-input">
+            <div className="chat-form">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <input
+                  type="text" 
+                  className="mail-write-box form-control" 
+                  placeholder="Type something..."
+                  onChange={(e) => setText(e.target.value)}
+                  onKeyDown={sendWithEnter}
+                  value={text}/>
+            </div>
+          </div>
+        </div>
+        {/* <div className="input">
+            <input
+              type="text"
+              placeholder="Type something..."
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={sendWithEnter}
+              value={text}
+            />
+            <div className="send">
+              <input
+                type="file"
+                style={{ display: "none" }}
+                id="file"
+                onChange={(e) => setImg(e.target.files[0])}
+              />
+              <label htmlFor="file">
+                <img src={Img} alt="" />
+              </label>
+              <button disabled={text ? false : img ? false : true} style={{ backgroundColor: text ? "blue" : img ? "blue" : "", borderRadius: "12px" }} onClick={handleSend}>Send</button>
+            </div>
+        </div> */}
+    </>
+
   );
 };
 
