@@ -34,7 +34,7 @@ const Chat = () => {
                 <div className="chat-meta-user chat-active" style={chatFooterDisplayStyle} >
                     <div className="current-chat-user-name" >
                         <span>
-                            <img src="/assets/img/90x90.jpg" alt="dynamic-image" />
+                            <img src="/assets/img/avatar.png" alt="dynamic-image" />
                             <span className="name">
                               {data.user?.firstname}
                             </span>

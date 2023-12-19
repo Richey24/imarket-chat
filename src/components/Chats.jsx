@@ -61,7 +61,7 @@ const Chats = () => {
               
               <div className="user-info ">
                   <div className="f-head">
-                      <img src="/assets/img/profile-4.jpeg" alt="avatar" />
+                      <img src="/assets/img/avatar-01.png" alt="avatar" />
                   </div>
                 
                   <div className="f-body">

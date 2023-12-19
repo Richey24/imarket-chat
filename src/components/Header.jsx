@@ -36,22 +36,20 @@ function Header () {
 
                 <a href="javascript:void(0);" className="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
                 
-                <ul className="navbar-item theme-brand flex-row  text-center">
-                    <li className="nav-item theme-logo">
-                        <a href="index.html">
-                            <img src="/assets/img/logo.png" className="navbar-logo" alt="logo" />
+                <ul className="navbar-item theme-brand flex-row text-center">
+                   
+                    <li className="nav-item">
+                        <a href="#">
+                            <img src="/assets/img/logo-white.png" alt="logo" width={80} />
                         </a>
                     </li>
+
                     <li className="nav-item theme-text">
                         <a href="index.html" className="nav-link"> </a>
                     </li>
                 </ul>
 
-            
                 <ul className="navbar-item flex-row ms-lg-auto ms-0 action-area">
-
-                
-
                     <li className="nav-item theme-toggle-item">
                         <a href="javascript:void(0);" className="nav-link theme-toggle" >
                             {darkmode === 'dark' ?  
@@ -121,6 +119,7 @@ function Header () {
                         
                     </li>
                 </ul>
+
             </header>
         </div>
     </>
