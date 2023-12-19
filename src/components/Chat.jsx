@@ -2,14 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
-// import PerfectScrollbar from 'react-perfect-scrollbar'
-
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 const Chat = () => {
-  const [activeChat, setActiveChat] = useState(true);
-
   const { data } = useContext(ChatContext);
   const chatFooterDisplayStyle = data ? { display: 'block' } : { display: 'none' };
  
@@ -18,11 +14,18 @@ const Chat = () => {
       suppressScrollX: true
     });
 
+    // Scroll to the bottom of the chat container
+    // const chatContainer = document.querySelector('.chat-conversation-box');
+
+    // if (chatContainer) {
+    //   chatContainer.scrollTop = chatContainer.scrollHeight;
+    // }
+
     // Clean up the PerfectScrollbar instance when the component unmounts
     return () => {
       psChat.destroy();
     };
-  }, []);
+  }, [data]); // The effect should re-run when 'data' changes
 
   return (
     <>
@@ -49,17 +52,7 @@ const Chat = () => {
             </div>
       </div>
     </>
-    // <div className="chat">
-    //   <div className="chatInfo">
-    //     <span>{data.user?.firstname}</span>
-    //   </div>
-   
-    //   
-    //   
-    // </div>
   );
 };
 
 export default Chat;
-
-

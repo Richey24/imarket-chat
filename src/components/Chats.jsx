@@ -1,5 +1,5 @@
 import { doc, onSnapshot } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef  } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
@@ -12,6 +12,8 @@ const Chats = () => {
 
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+
+  const endOfMessagesRef = useRef(null); // Ref to the end of the messages
 
   useEffect(() => {
     const getChats = () => {
@@ -32,6 +34,13 @@ const Chats = () => {
       suppressScrollX: true,
     });
 
+     // Scroll to the bottom of the chat container
+    //  const chatContainer = document.querySelector('.chat-conversation-box');
+
+    //  if (chatContainer) {
+    //    chatContainer.scrollTop = chatContainer.scrollHeight;
+    //  }
+
     // Cleanup function to destroy PerfectScrollbar instance when component unmounts
     return () => {
       ps.destroy();
@@ -40,6 +49,7 @@ const Chats = () => {
 
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
+    endOfMessagesRef.current?.scrollIntoView(false);
   };
 
   return (

@@ -1,34 +1,33 @@
-.chat-conversation-box {
-  max-height: 100% !important;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  white-space: nowrap; /* Prevent wrapping of items */
+.chat-footer .chat-input .chat-form {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-.chat-box{
-  // height: 100vh !important;
+.mail-write-box {
+  flex-grow: 1; /* Takes up available space */
+  padding-right: 80px; /* Adjust based on button and image size */
 }
 
-// #content {
-//   margin-top: 0px !important;
-// }
-
-.user-list-box {
-  // height: 100vh !important;
+.file-input-label {
+  margin-right: 10px; /* Adjust this value as needed */
+  position: absolute;
+  right: 60px; /* Adjust based on button size */
+  cursor: pointer;
 }
 
-// .horizontal-scroll {
-//   display: flex; /* Align items in a row */
-//   overflow-x: auto; /* Enable horizontal scrolling */
-//   white-space: nowrap; /* Prevent wrapping of items */
-// }
+.send-button {
+  margin-left: 10px; /* Adjust this value as needed */
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  border-radius: 12px;
+  /* Add more styling for the button */
+}
 
-// .chat-conversation-box {
-//   margin-top: 0 !important; 
-//   overflow-x: auto !important; /* Enable horizontal scrolling */
-//   white-space: nowrap ; /* Prevent wrapping of items */
-//   max-height: 100vh !important;
-// }
-
-// #content {
-//   margin-top: 0px !important;
-// }
+.message-image {
+  max-width: 100%;
+  height: auto;
+  width: 300px;
+  display: block; /* Ensures the image doesn't have extra space below it */
+  border-radius: 8px; /* Optional, for rounded corners */
+}
