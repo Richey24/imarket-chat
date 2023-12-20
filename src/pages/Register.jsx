@@ -33,24 +33,84 @@ const Register = () => {
   }
 
   return (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <img style={{ width: "120px", height: "40px" }} src={logo} alt="" />
-        <span className="logo">Ishop Chat</span>
-        <span className="title">Register</span>
-        <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="display name" />
-          <input required type="email" placeholder="email" />
-          <input required type="password" placeholder="password" />
-          <button disabled={loading}>Sign up</button>
-          {loading && "Loading..."}
-          {err && <span>Something went wrong</span>}
-        </form>
-        <p>
-          You do have an account? <Link to="/register">Login</Link>
-        </p>
+
+    <div className="auth-container d-flex"  style={{ marginTop: '10%'}}> 
+      <div className="container mx-auto align-self-center">
+
+          <div className="row">
+
+              <div className="col-xxl-4 col-xl-5 col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center mx-auto">
+                  <div className="card mt-3 mb-3">
+                      <div className="card-body">
+                        
+                         <form onSubmit={handleSubmit}>
+                            <div className="row">
+                                <div className="col-md-12 mb-3 text-center">
+                                   <img style={{ width: "320px" }} src={logo} alt="" />
+
+                                 
+                                    <hr />
+                                    <h2>Sign Up</h2>
+                                    <p>Enter your email and password to register</p>
+                                    
+                                </div>
+                                <div className="col-md-12">
+                                    <div className="mb-3">
+                                        <label className="form-label">Display name</label>
+                                        <input required type="text" className="form-control add-billing-address-input" />
+                                    </div>
+                                </div>
+                                <div className="col-md-12">
+                                    <div className="mb-3">
+                                        <label className="form-label">Email</label>
+                                        <input required type="email" className="form-control" />
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <div className="mb-3">
+                                        <label className="form-label">Password</label>
+                                        <input required type="text" className="form-control" />
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <div className="mb-3">
+                                        <div className="form-check form-check-primary form-check-inline">
+                                            <input className="form-check-input me-3" type="checkbox" id="form-check-default" />
+                                            <label className="form-check-label" for="form-check-default">
+                                                I agree the <a href="javascript:void(0);" className="text-primary">Terms and Conditions</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="col-12">
+                                    <div className="mb-4">
+                                        <button disabled={loading} className="btn btn-secondary w-100">SIGN UP</button>
+                                        {loading && "Loading..."}
+                                        {err && <span>Something went wrong</span>}
+                                    </div>
+                                </div>
+                                
+                              
+                                <div className="col-12">
+                                    <div className="text-center">
+                                        <p className="mb-0">Already have an account ? 
+                                          <Link to="/login" className="text-warning">Sign in</Link>
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
       </div>
-    </div>
+   </div>
+    
   );
 };
 

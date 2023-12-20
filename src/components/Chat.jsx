@@ -10,6 +10,7 @@ const Chat = () => {
   const chatFooterDisplayStyle = data ? { display: 'block' } : { display: 'none' };
  
   useEffect(() => {
+   
     const psChat = new PerfectScrollbar('.chat-conversation-box', {
       suppressScrollX: true
     });
@@ -50,7 +51,7 @@ const Chat = () => {
 
                 <Input />
             </div>
-      </div>
+        </div>
     </>
   );
 };

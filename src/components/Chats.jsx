@@ -16,6 +16,7 @@ const Chats = () => {
   const endOfMessagesRef = useRef(null); // Ref to the end of the messages
 
   useEffect(() => {
+   
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
         doc.data() && setChats(doc.data());
@@ -54,26 +55,26 @@ const Chats = () => {
 
   return (
     <>
-    {Object.keys(chats)?.length >= 1 && Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map((chat) => (
-        <div className="person" 
-              key={chat[0]}  
-              onClick={() => handleSelect(chat[1]?.userInfo)}>
-              
-              <div className="user-info ">
-                  <div className="f-head">
-                      <img src="/assets/img/avatar-01.png" alt="avatar" />
-                  </div>
+      {Object.keys(chats)?.length >= 1 && Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map((chat) => (
+          <div className="person" 
+                key={chat[0]}  
+                onClick={() => handleSelect(chat[1]?.userInfo)}>
                 
-                  <div className="f-body">
-                      <div className="meta-info">
-                          <span className="user-name">{chat[1].userInfo?.firstname}</span>
-                          <span className="user-meta-time"> { chat[1].status === "online" ? "Online" : "Offline"} <div class="badge badge-primary badge-dot"></div> </span>
-                      </div>
-                      <span className="preview">{chat[1].lastMessage?.text}</span>
-                  </div>
-              </div>
-        </div>
-     ))}
+                <div className="user-info ">
+                    <div className="f-head">
+                        <img src="/assets/img/avatar-01.png" alt="avatar" />
+                    </div>
+                  
+                    <div className="f-body">
+                        <div className="meta-info">
+                            <span className="user-name">{chat[1].userInfo?.firstname}</span>
+                            <span className="user-meta-time"> { chat[1].status === "online" ? "Online" : "Offline"} <div class="badge badge-primary badge-dot"></div> </span>
+                        </div>
+                        <span className="preview">{chat[1].lastMessage?.text}</span>
+                    </div>
+                </div>
+          </div>
+      ))}
     </>
   );
 };
