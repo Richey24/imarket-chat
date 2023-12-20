@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from "../context/AuthContext";
+import { signOut } from "firebase/auth"
+import { auth } from '../firebase'
 
 function Header () {
     const { currentUser } = useContext(AuthContext);
@@ -106,12 +108,12 @@ function Header () {
                                 </div>
                             </div>
                             <div className="dropdown-item">
-                                <a href="auth-boxed-lockscreen.html">
+                                <a href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Lock Screen</span>
                                 </a>
                             </div>
                             <div className="dropdown-item">
-                                <a href="auth-boxed-signin.html">
+                                <a href="#" onClick={() => signOut(auth)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> <span>Log Out</span>
                                 </a>
                             </div>
