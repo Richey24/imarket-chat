@@ -2,27 +2,31 @@ import React, { useContext, useState, useEffect } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
-// import PerfectScrollbar from 'react-perfect-scrollbar'
-
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 const Chat = () => {
-  const [activeChat, setActiveChat] = useState(true);
-
   const { data } = useContext(ChatContext);
   const chatFooterDisplayStyle = data ? { display: 'block' } : { display: 'none' };
  
   useEffect(() => {
+   
     const psChat = new PerfectScrollbar('.chat-conversation-box', {
       suppressScrollX: true
     });
+
+    // Scroll to the bottom of the chat container
+    // const chatContainer = document.querySelector('.chat-conversation-box');
+
+    // if (chatContainer) {
+    //   chatContainer.scrollTop = chatContainer.scrollHeight;
+    // }
 
     // Clean up the PerfectScrollbar instance when the component unmounts
     return () => {
       psChat.destroy();
     };
-  }, []);
+  }, [data]); // The effect should re-run when 'data' changes
 
   return (
     <>
@@ -31,7 +35,7 @@ const Chat = () => {
                 <div className="chat-meta-user chat-active" style={chatFooterDisplayStyle} >
                     <div className="current-chat-user-name" >
                         <span>
-                            <img src="/assets/img/90x90.jpg" alt="dynamic-image" />
+                            <img src="/assets/img/avatar.png" alt="dynamic-image" />
                             <span className="name">
                               {data.user?.firstname}
                             </span>
@@ -47,19 +51,9 @@ const Chat = () => {
 
                 <Input />
             </div>
-      </div>
+        </div>
     </>
-    // <div className="chat">
-    //   <div className="chatInfo">
-    //     <span>{data.user?.firstname}</span>
-    //   </div>
-   
-    //   
-    //   
-    // </div>
   );
 };
 
 export default Chat;
-
-
