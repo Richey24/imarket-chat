@@ -11,15 +11,22 @@ function Header () {
     useEffect(() => {
 
         console.log(currentUser)
+
         // On component mount, check if a theme is stored and apply it
         const savedTheme = localStorage.getItem('theme');
+
         if (savedTheme) {
+
             document.body.classList.add(savedTheme);
-            setDarkMode(savedTheme)
+
+            setDarkMode(savedTheme);
+
         }
+
     }, []);
 
     const handleThemeChange = (option) => {
+
         // Remove previous theme class if any
         document.body.classList.remove('dark', 'light');
 
@@ -28,9 +35,9 @@ function Header () {
 
         // Save the selected theme in local storage
         localStorage.setItem('theme', option);
+
         setDarkMode(option)
     }
-
 
     return <>
         <div className="header-container container-xxl">

@@ -30,9 +30,9 @@ const Chat = () => {
 
   return (
     <>
-        <div className="chat-box ">
+        <div className="chat-box" >
             <div className="chat-box-inner" style={{ height: '100%'}}>
-                <div className="chat-meta-user chat-active" style={chatFooterDisplayStyle} >
+                <div className="chat-meta-user" style={chatFooterDisplayStyle} >
                     <div className="current-chat-user-name" >
                         <span>
                             <img src="/assets/img/avatar.png" alt="dynamic-image" />
