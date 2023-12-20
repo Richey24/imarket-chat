@@ -3,26 +3,28 @@ import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import logo from "../img/logo-black.png"
+import logo from "../img/logo-black.png";
+import ImagePicker from "../components/ImagePicker/ImagePicker";
 
 const Register = () => {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState("");
   const navigate = useNavigate();
-  const [params, setParams] = useSearchParams()
-
+  const [params, setParams] = useSearchParams();
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const displayName = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
+    const displayName = e.target[1].value;
+    const email = e.target[2].value;
+    const password = e.target[3].value;
     try {
       //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(res.user, {
         displayName,
+        photoURL: image,
       });
       await setDoc(doc(db, "userChats", res.user.uid), {});
       navigate("/");
@@ -30,87 +32,109 @@ const Register = () => {
       setErr(true);
       setLoading(false);
     }
-  }
-
+  };
+  const handleFormChange = (value) => {
+    setImage(value);
+  };
   return (
-
-    <div className="auth-container d-flex"  style={{ marginTop: '10%'}}> 
+    <div className="auth-container d-flex" style={{ marginTop: "10%" }}>
       <div className="container mx-auto align-self-center">
+        <div className="row">
+          <div className="col-xxl-4 col-xl-5 col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center mx-auto">
+            <div className="card mt-3 mb-3">
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-md-12 mb-3 text-center">
+                      <img style={{ width: "320px" }} src={logo} alt="" />
 
-          <div className="row">
-
-              <div className="col-xxl-4 col-xl-5 col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center mx-auto">
-                  <div className="card mt-3 mb-3">
-                      <div className="card-body">
-                        
-                         <form onSubmit={handleSubmit}>
-                            <div className="row">
-                                <div className="col-md-12 mb-3 text-center">
-                                   <img style={{ width: "320px" }} src={logo} alt="" />
-
-                                 
-                                    <hr />
-                                    <h2>Sign Up</h2>
-                                    <p>Enter your email and password to register</p>
-                                    
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="mb-3">
-                                        <label className="form-label">Display name</label>
-                                        <input required type="text" className="form-control add-billing-address-input" />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="mb-3">
-                                        <label className="form-label">Email</label>
-                                        <input required type="email" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="col-12">
-                                    <div className="mb-3">
-                                        <label className="form-label">Password</label>
-                                        <input required type="text" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="col-12">
-                                    <div className="mb-3">
-                                        <div className="form-check form-check-primary form-check-inline">
-                                            <input className="form-check-input me-3" type="checkbox" id="form-check-default" />
-                                            <label className="form-check-label" for="form-check-default">
-                                                I agree the <a href="javascript:void(0);" className="text-primary">Terms and Conditions</a>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="col-12">
-                                    <div className="mb-4">
-                                        <button disabled={loading} className="btn btn-secondary w-100">SIGN UP</button>
-                                        {loading && "Loading..."}
-                                        {err && <span>Something went wrong</span>}
-                                    </div>
-                                </div>
-                                
-                              
-                                <div className="col-12">
-                                    <div className="text-center">
-                                        <p className="mb-0">Already have an account ? 
-                                          <Link to="/login" className="text-warning">Sign in</Link>
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                          </form>
+                      <hr />
+                      <h2>Sign Up</h2>
+                      <p>Enter your email and password to register</p>
+                    </div>
+                    <ImagePicker
+                      setFiles={async (images) => {
+                        const imageURL = await images;
+                        handleFormChange(imageURL);
+                      }}
+                    />
+                    <div className="col-md-12">
+                      <div className="mb-3">
+                        <label className="form-label">Display name</label>
+                        <input
+                          required
+                          type="text"
+                          className="form-control add-billing-address-input"
+                        />
                       </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input required type="email" className="form-control" />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="mb-3">
+                        <label className="form-label">Password</label>
+                        <input required type="text" className="form-control" />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="mb-3">
+                        <div className="form-check form-check-primary form-check-inline">
+                          <input
+                            className="form-check-input me-3"
+                            type="checkbox"
+                            id="form-check-default"
+                          />
+                          <label
+                            className="form-check-label"
+                            for="form-check-default"
+                          >
+                            I agree the{" "}
+                            <a
+                              href="javascript:void(0);"
+                              className="text-primary"
+                            >
+                              Terms and Conditions
+                            </a>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="mb-4">
+                        <button
+                          disabled={loading}
+                          className="btn btn-secondary w-100"
+                        >
+                          SIGN UP
+                        </button>
+                        {loading && "Loading..."}
+                        {err && <span>Something went wrong</span>}
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="text-center">
+                        <p className="mb-0">
+                          Already have an account ?
+                          <Link to="/login" className="text-warning">
+                            Sign in
+                          </Link>
+                        </p>
+                      </div>
+                    </div>
                   </div>
+                </form>
               </div>
-              
+            </div>
           </div>
-          
+        </div>
       </div>
-   </div>
-    
+    </div>
   );
 };
 

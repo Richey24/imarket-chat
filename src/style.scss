@@ -31,3 +31,27 @@
   display: block; /* Ensures the image doesn't have extra space below it */
   border-radius: 8px; /* Optional, for rounded corners */
 }
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  border: 1px solid #ebebeb;
+  padding: 8px;
+  gap: 8px;
+  width: calc(100% - 28px);
+  border-radius: 4px;
+}
+.imagePicker {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  border: 1px solid #ebebeb;
+  align-items: center;
+  justify-content: center;
+  background-color: #f6f7fb;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: ease-in-out all 0.2s;
+}
