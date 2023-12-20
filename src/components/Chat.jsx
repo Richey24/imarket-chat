@@ -2,17 +2,20 @@ import React, { useContext, useState, useEffect } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
+import { AuthContext } from "../context/AuthContext";
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
-  const chatFooterDisplayStyle = data ? { display: 'block' } : { display: 'none' };
- 
+  const { currentUser } = useContext(AuthContext);
+  const chatFooterDisplayStyle = data
+    ? { display: "block" }
+    : { display: "none" };
+
   useEffect(() => {
-   
-    const psChat = new PerfectScrollbar('.chat-conversation-box', {
-      suppressScrollX: true
+    const psChat = new PerfectScrollbar(".chat-conversation-box", {
+      suppressScrollX: true,
     });
 
     // Scroll to the bottom of the chat container
@@ -30,28 +33,35 @@ const Chat = () => {
 
   return (
     <>
-        <div className="chat-box ">
-            <div className="chat-box-inner" style={{ height: '100%'}}>
-                <div className="chat-meta-user chat-active" style={chatFooterDisplayStyle} >
-                    <div className="current-chat-user-name" >
-                        <span>
-                            <img src="/assets/img/avatar.png" alt="dynamic-image" />
-                            <span className="name">
-                              {data.user?.firstname}
-                            </span>
-                        </span>
-                    </div>
-               </div>
-                
-                <div className="chat-conversation-box ps">
-                    <div id="chat-conversation-box-scroll" className="chat-conversation-box-scroll">
-                      <Messages />   
-                    </div>
-                </div>
-
-                <Input />
+      <div className="chat-box ">
+        <div className="chat-box-inner" style={{ height: "100%" }}>
+          <div
+            className="chat-meta-user chat-active"
+            style={chatFooterDisplayStyle}
+          >
+            <div className="current-chat-user-name">
+              <span>
+                <img
+                  src={currentUser.photoURL || "/assets/img/avatar.png"}
+                  alt="user avatar"
+                />
+                <span className="name">{data.user?.firstname}</span>
+              </span>
             </div>
+          </div>
+
+          <div className="chat-conversation-box ps">
+            <div
+              id="chat-conversation-box-scroll"
+              className="chat-conversation-box-scroll"
+            >
+              <Messages />
+            </div>
+          </div>
+
+          <Input />
         </div>
+      </div>
     </>
   );
 };
