@@ -1,41 +1,25 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext"; // Import your AuthContext
 
 const Message = ({ message }) => {
-  const { currentUser } = useContext(AuthContext);
-  const { data } = useContext(ChatContext);
-  console.log(data);
+  const { currentUser } = useContext(AuthContext); // Get current user from context
 
-  const ref = useRef();
+  // Function to determine message sender
+  const isSentByCurrentUser = message.senderId === currentUser.uid;
 
-  useEffect(() => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
-
-  const showLargeImage = (img) => {
-    document.getElementById("theImage").src = img
-    document.getElementById("imageOverlay").classList.add("showImg")
-  }
+  // Render the message bubble
+  const renderMessageBubble = () => {
+    return (
+      <div className={`message-bubble ${isSentByCurrentUser ? "sent" : "received"}`}>
+        {message.text && <p>{message.text}</p>}
+        {message.img && <img src={message.img} alt="Message content" className="message-image" />}        {/* Add more conditions here if your message has other types of content */}
+      </div>
+    );
+  };
 
   return (
-    <div
-      ref={ref}
-      className={`message ${message.senderId === currentUser.uid && "owner"}`}
-    >
-      <div style={{ backgroundColor: message.senderId === currentUser.uid ? "#0d2984" : "green" }} className="initial">
-        {message.senderId === currentUser.uid ? currentUser.email?.charAt(0) : data?.user.firstname.charAt(0)}
-      </div>
-      <div>
-        <div className="messageInfo">
-          <div>{message.senderId === currentUser.uid ? currentUser.email : data?.user.firstname}</div>
-          <span>{new Date(message.date?.seconds * 1000 + message.date?.nanoseconds / 1000000).toLocaleString()}</span>
-        </div>
-        <div className="messageContent">
-          {message.text && <p>{message.text}</p>}
-          {message.img && <img onClick={() => showLargeImage(message.img)} src={message.img} alt="" />}
-        </div>
-      </div>
+    <div className={`message ${isSentByCurrentUser ? "bubble me" : "bubble you"}`}>
+      {renderMessageBubble()}
     </div>
   );
 };

@@ -19,7 +19,7 @@ const Search = () => {
   const [err, setErr] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
+  console.log(currentUser); 
 
   useEffect(() => {
     (async () => {
@@ -87,15 +87,14 @@ const Search = () => {
   };
   return (
     <div className="search">
-      <div className="searchForm">
         <input
+         className="form-control"
           type="text"
-          placeholder="Find a user"
+          placeholder="Search User"
           onKeyDown={handleKey}
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
-      </div>
       {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
@@ -108,5 +107,4 @@ const Search = () => {
     </div>
   );
 };
-
 export default Search;
