@@ -36,9 +36,9 @@ const Messages = () => {
       {/* <div className="conversation-start">
           <span>Today, 6:48 AM</span>
       </div> */}
-      
-      {messages.map((m) => (
-        <Message message={m} key={m.id} />
+
+      {messages.map((m, i) => (
+        <Message message={m} key={i} />
       ))}
 
       {/* Invisible element at the end of messages for scrolling */}
