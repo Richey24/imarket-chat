@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      * {
-        font-family: "Open Sans", sans-serif;
-        margin: 0;
-      }
-    </style>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="/layouts/horizontal-dark-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="/layouts/horizontal-dark-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
 
-    <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="/assets/css/light/apps/chat.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/dark/apps/chat.css" rel="stylesheet" type="text/css" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      font-family: "Open Sans", sans-serif;
+      margin: 0;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="/layouts/horizontal-dark-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+  <link href="/layouts/horizontal-dark-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+  <!-- END GLOBAL MANDATORY STYLES -->
 
-     
-    <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/light/elements/alert.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/dark/elements/alert.css">
-    <!--  END CUSTOM STYLE FILE  -->
+  <!-- BEGIN PAGE LEVEL STYLES -->
+  <link href="/assets/css/light/apps/chat.css" rel="stylesheet" type="text/css" />
+  <link href="/assets/css/dark/apps/chat.css" rel="stylesheet" type="text/css" />
 
-    <!-- END PAGE LEVEL STYLES -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
 
-      <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-      <script src="/plugins/src/global/vendors.min.js"></script>
-      <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- <script src="/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script> -->
-      <script src="/plugins/src/mousetrap/mousetrap.min.js"></script>
-      <script src="/plugins/src/waves/waves.min.js"></script>
-      <script src="/layouts/horizontal-light-menu/app.js"></script>
-      <!-- END GLOBAL MANDATORY SCRIPTS -->
-  
-      <!-- BEGIN PAGE LEVEL SCRIPTS -->
-      <script src="/assets/js/apps/chat.js"></script>
-      <!-- END PAGE LEVEL SCRIPTS -->
-  </body>
+  <!--  BEGIN CUSTOM STYLE FILE  -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/light/elements/alert.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/dark/elements/alert.css">
+  <!--  END CUSTOM STYLE FILE  -->
+
+  <!-- END PAGE LEVEL STYLES -->
+  <title>React App</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+
+  <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+  <script src="/plugins/src/global/vendors.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script> -->
+  <script src="/plugins/src/mousetrap/mousetrap.min.js"></script>
+  <script src="/plugins/src/waves/waves.min.js"></script>
+  <script src="/layouts/horizontal-light-menu/app.js"></script>
+  <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+  <!-- BEGIN PAGE LEVEL SCRIPTS -->
+  <script src="/assets/js/apps/chat.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', { scope: "/" })
+        .then(() => {
+          console.log("service worker register");
+        })
+      navigator.serviceWorker.ready.then(() => {
+        console.log("service worker ready");
+      })
+    }
+  </script>
+  <!-- END PAGE LEVEL SCRIPTS -->
+</body>
+
 </html>

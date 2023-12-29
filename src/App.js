@@ -11,6 +11,7 @@ import { useEffect } from "react";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
@@ -19,6 +20,7 @@ function App() {
   };
 
   useEffect(() => {
+    /* eslint-disable-next-line no-restricted-globals */
     (async () => {
       const res = await getDoc(doc(db, "userChats", currentUser.uid));
 

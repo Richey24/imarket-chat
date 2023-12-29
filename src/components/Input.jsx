@@ -6,6 +6,7 @@ import { ChatContext } from "../context/ChatContext";
 import {
   arrayUnion,
   doc,
+  getDoc,
   serverTimestamp,
   Timestamp,
   updateDoc,
@@ -13,6 +14,7 @@ import {
 import { db, storage } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import axios from "axios";
 
 const Input = () => {
   const [text, setText] = useState("");
@@ -79,6 +81,18 @@ const Input = () => {
       [data.chatId + ".date"]: serverTimestamp(),
     });
 
+    const res = await getDoc(doc(db, "userChats", currentUser.uid));
+    const info = {
+      title: `New Message from ${res.data()[data.chatId].userInfo.firstname}`,
+      text: text,
+      tag: "New message",
+      url: "https://chat.ishop.black/"
+    }
+    const response = await axios.post("https://market-server.azurewebsites.net/api/user/notification", {
+      pushNotification: JSON.parse(res.data()[data.chatId].userInfo.notification),
+      info: info
+    })
+    console.log(response);
     setText("");
     setImg(null);
   };
@@ -95,38 +109,38 @@ const Input = () => {
   return (
     <>
       <div className="chat-footer chat-active" >
-        
-          <div className="chat-input">
-            <div className="chat-form">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                  <input
-                  type="text" 
-                  className="mail-write-box form-control" 
-                  placeholder="Type something..."
-                  onChange={(e) => setText(e.target.value)}
-                  onKeyDown={sendWithEnter}
-                  value={text}/>
 
-                   <label htmlFor="file" className="file-input-label ">
-                      <img src={Img} alt="" />
-                        <input
-                          type="file"
-                          style={{ display: "none" }}
-                          id="file"
-                          onChange={(e) => setImg(e.target.files[0])}
-                        />
-                  </label>
-                  <button
-                    disabled={!text && !img}
-                    className="send-button"
-                    onClick={handleSend}
-                  >
-                    Send
-                  </button>
-        </div>
-            </div>
+        <div className="chat-input">
+          <div className="chat-form">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <input
+              type="text"
+              className="mail-write-box form-control"
+              placeholder="Type something..."
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={sendWithEnter}
+              value={text} />
+
+            <label htmlFor="file" className="file-input-label ">
+              <img src={Img} alt="" />
+              <input
+                type="file"
+                style={{ display: "none" }}
+                id="file"
+                onChange={(e) => setImg(e.target.files[0])}
+              />
+            </label>
+            <button
+              disabled={!text && !img}
+              className="send-button"
+              onClick={handleSend}
+            >
+              Send
+            </button>
           </div>
-        {/* <div className="input">
+        </div>
+      </div>
+      {/* <div className="input">
             <input
               type="text"
               placeholder="Type something..."
