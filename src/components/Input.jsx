@@ -82,8 +82,9 @@ const Input = () => {
     });
 
     const res = await getDoc(doc(db, "userChats", currentUser.uid));
+    const sender = await getDoc(doc(db, "userChats", data.user.uid));
     const info = {
-      title: `New Message from ${res.data()[data.chatId].userInfo.firstname}`,
+      title: `New Message from ${sender.data()[data.chatId].userInfo.firstname}`,
       text: text,
       tag: "New message",
       url: "https://chat.ishop.black/"
