@@ -4,11 +4,11 @@ function receivePushNotification(event) {
     const options = {
         data: url,
         body: text,
-        icon: "https://cdn.jsdelivr.net/gh/Richey24/imarket-cdn/src/assets/images/icons/logo.png",
+        icon: "https://cdn.jsdelivr.net/gh/Richey24/imarket-cdn/src/assets/images/ishopchat-logo.png",
         vibrate: [200, 100, 200],
         tag: tag,
-        badge: "https://cdn.jsdelivr.net/gh/Richey24/imarket-cdn/src/assets/images/icons/logo.png",
-        actions: [{ action: "Detail", title: "View", icon: "https://cdn.jsdelivr.net/gh/Richey24/imarket-cdn/src/assets/images/icons/logo.png" }]
+        badge: "https://cdn.jsdelivr.net/gh/Richey24/imarket-cdn/src/assets/images/ishopchat-logo.png",
+        actions: [{ action: "Detail", title: "View", icon: "https://cdn.jsdelivr.net/gh/Richey24/imarket-cdn/src/assets/images/ishopchat-logo.png" }]
     };
     event.waitUntil(self.registration.showNotification(title, options));
 }
